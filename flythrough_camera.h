@@ -101,6 +101,10 @@ void flythrough_camera_update(
         look[2] / look_len * up[0] / up_len - look[0] / look_len * up[2] / up_len,
         look[0] / look_len * up[1] / up_len - look[1] / look_len * up[0] / up_len
     };
+    float across_len = sqrtf(across[0] * across[0] + across[1] * across[1] + across[2] * across[2]);
+    across[0] /= across_len;
+    across[1] /= across_len;
+    across[2] /= across_len;
 
     // forward = normalize(look)
     float forward[3] = { look[0] / look_len, look[1] / look_len, look[2] / look_len };
@@ -111,6 +115,10 @@ void flythrough_camera_update(
         across[2] * forward[0] - across[0] * forward[2],
         across[0] * forward[1] - across[1] * forward[0]
     };
+    float upward_len = sqrtf(upward[0] * upward[0] + upward[1] * upward[1] + upward[2] * upward[2]);
+    upward[0] /= upward_len;
+    upward[1] /= upward_len;
+    upward[2] /= upward_len;
 
     // apply eye movement in the xz plane
     if ((right_held && !left_held) || (!right_held && left_held) ||
@@ -175,9 +183,11 @@ void flythrough_camera_update(
             yaw_rotation[2] * look[0] + yaw_rotation[5] * look[1] + yaw_rotation[8] * look[2]
         };
 
-        look[0] = newlook[0];
-        look[1] = newlook[1];
-        look[2] = newlook[2];
+        float newlook_len = sqrtf(newlook[0] * newlook[0] + newlook[1] * newlook[1] + newlook[2] * newlook[2]);
+
+        look[0] = newlook[0] / newlook_len;
+        look[1] = newlook[1] / newlook_len;
+        look[2] = newlook[2] / newlook_len;
     }
 
     // apply pitch rotation (rotating up or down)
@@ -229,9 +239,11 @@ void flythrough_camera_update(
             pitch_rotation[2] * look[0] + pitch_rotation[5] * look[1] + pitch_rotation[8] * look[2]
         };
 
-        look[0] = newlook[0];
-        look[1] = newlook[1];
-        look[2] = newlook[2];
+        float newlook_len = sqrtf(newlook[0] * newlook[0] + newlook[1] * newlook[1] + newlook[2] * newlook[2]);
+
+        look[0] = newlook[0] / newlook_len;
+        look[1] = newlook[1] / newlook_len;
+        look[2] = newlook[2] / newlook_len;
     }
 
     flythrough_camera_look_to(eye, look, up, view, flags);
