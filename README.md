@@ -65,12 +65,12 @@ int main()
             printf("pos: %f, %f, %f\n", pos[0], pos[1], pos[2]);
             printf("look: %f, %f, %f\n", look[0], look[1], look[2]);
             printf("view: %f %f %f %f\n"
-                "      %f %f %f %f\n"
-                "      %f %f %f %f\n"
-                "      %f %f %f %f\n",
-                view[0], view[1], view[2], view[3],
-                view[4], view[5], view[6], view[7],
-                view[8], view[9], view[10], view[11],
+                   "      %f %f %f %f\n"
+                   "      %f %f %f %f\n"
+                   "      %f %f %f %f\n",
+                 view[0],  view[1],  view[2],  view[3],
+                 view[4],  view[5],  view[6],  view[7],
+                 view[8],  view[9],  iew[10], view[11],
                 view[12], view[13], view[14], view[15]);
             
             Sleep(100);
