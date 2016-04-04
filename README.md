@@ -17,7 +17,6 @@ Create a new Visual Studio project, drop this file in it, and it should just wor
 #include "flythrough_camera.h"
 
 #include <Windows.h>
-
 #include <stdio.h>
 
 int main()
