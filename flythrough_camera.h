@@ -89,6 +89,8 @@ void flythrough_camera_update(
     float look_len = sqrtf(look[0] * look[0] + look[1] * look[1] + look[2] * look[2]);
     float up_len = sqrtf(up[0] * up[0] + up[1] * up[1] + up[2] * up[2]);
 
+    // unit length of look direction is expected and maintained throughout the algorithm
+    // otherwise, the vector gets smaller and smaller as error accumulates, eventually becoming 0.
     assert(fabsf(look_len - 1.0f) < 0.000001f);
     assert(fabsf(up_len - 1.0f) < 0.000001f);
 
