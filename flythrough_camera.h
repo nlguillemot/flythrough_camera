@@ -112,7 +112,7 @@ void flythrough_camera_update(
         across[0] * forward[1] - across[1] * forward[0]
     };
 
-    // apply eye movement in the xy plane
+    // apply eye movement in the xz plane
     if ((right_held && !left_held) || (!right_held && left_held) ||
         (forward_held && !backward_held) || (!forward_held && backward_held))
     {
