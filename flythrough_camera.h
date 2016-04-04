@@ -95,7 +95,7 @@ void flythrough_camera_update(
     // account for Y going down in cursor apis
     delta_cursor_y = -delta_cursor_y;
 
-    // across = cross(normalize(look), normalize(up))
+    // across = normalize(cross(normalize(look), normalize(up)))
     float across[3] = {
         look[1] / look_len * up[2] / up_len - look[2] / look_len * up[1] / up_len,
         look[2] / look_len * up[0] / up_len - look[0] / look_len * up[2] / up_len,
@@ -109,7 +109,7 @@ void flythrough_camera_update(
     // forward = normalize(look)
     float forward[3] = { look[0] / look_len, look[1] / look_len, look[2] / look_len };
 
-    // upward = cross(across, forward)
+    // upward = normalize(cross(across, forward))
     float upward[3] = {
         across[1] * forward[2] - across[2] * forward[1],
         across[2] * forward[0] - across[0] * forward[2],
