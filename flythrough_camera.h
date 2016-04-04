@@ -42,7 +42,7 @@ void flythrough_camera_update(
     float view[16],
     float delta_time_seconds,
     float eye_speed,
-    float degrees_per_cursor_move, 
+    float degrees_per_cursor_move,
     float max_pitch_rotation_degrees,
     double delta_cursor_x, double delta_cursor_y,
     int forward_held, int left_held, int backward_held, int right_held,
@@ -155,7 +155,8 @@ void flythrough_camera_update(
     // apply yaw rotation (rotating left or right)
     if (delta_cursor_x != 0.0)
     {
-        float yaw_degrees = (float)(delta_cursor_x * degrees_per_cursor_move);
+        // rotation here is counter-clockwise because sin/cos are counter-clockwise
+        float yaw_degrees = (float)(-delta_cursor_x * degrees_per_cursor_move);
 
         float yaw_radians = yaw_degrees * 3.14159265359f / 180.0f;
         float yaw_cos = cosf(yaw_radians);
@@ -207,6 +208,7 @@ void flythrough_camera_update(
         if (min_pitch_degrees < 0.0f)
             min_pitch_degrees = 0.0f;
 
+        // rotation here is counter-clockwise because sin/cos are counter-clockwise
         float pitch_degrees = (float)(delta_cursor_y * degrees_per_cursor_move);
 
         if (pitch_degrees > 0.0f && pitch_degrees > max_pitch_degrees)
@@ -267,12 +269,6 @@ void flythrough_camera_look_to(
 
     // f = normalize(look)
     float f[3] = { look[0] / look_len, look[1] / look_len, look[2] / look_len };
-    if (flags & FLYTHROUGH_CAMERA_LEFT_HANDED_BIT)
-    {
-        f[0] = -f[0];
-        f[1] = -f[1];
-        f[2] = -f[2];
-    }
 
     // s = normalize(cross(f, up2))
     float s[3] = {
@@ -296,25 +292,35 @@ void flythrough_camera_look_to(
     u[1] /= u_len;
     u[2] /= u_len;
 
-    // t = [s;u;-f] * -eye
+    if (!(flags & FLYTHROUGH_CAMERA_LEFT_HANDED_BIT))
+    {
+        // in a right-handed coordinate system, the camera's z looks away from the look direction.
+        // this gets flipped again later when you multiply by a right-handed projection matrix
+        // (notice the last row of gluPerspective, which makes it back into a left-handed system after perspective division)
+        f[0] = -f[0];
+        f[1] = -f[1];
+        f[2] = -f[2];
+    }
+
+    // t = [s;u;f] * -eye
     float t[3] = {
         s[0] * -eye[0] + s[1] * -eye[1] + s[2] * -eye[2],
         u[0] * -eye[0] + u[1] * -eye[1] + u[2] * -eye[2],
-        f[0] * +eye[0] + f[1] * +eye[1] + f[2] * +eye[2]
+        f[0] * -eye[0] + f[1] * -eye[1] + f[2] * -eye[2]
     };
 
     // m = [s,t[0]; u,t[1]; -f,t[2]];
-    view[0] = s[0]; 
-    view[1] = u[0]; 
-    view[2] = -f[0]; 
-    view[3] = 0.0f; 
-    view[4] = s[1]; 
-    view[5] = u[1]; 
-    view[6] = -f[1]; 
-    view[7] = 0.0f; 
-    view[8] = s[2]; 
-    view[9] = u[2]; 
-    view[10] = -f[2];
+    view[0] = s[0];
+    view[1] = u[0];
+    view[2] = f[0];
+    view[3] = 0.0f;
+    view[4] = s[1];
+    view[5] = u[1];
+    view[6] = f[1];
+    view[7] = 0.0f;
+    view[8] = s[2];
+    view[9] = u[2];
+    view[10] = f[2];
     view[11] = 0.0f;
     view[12] = t[0];
     view[13] = t[1];
