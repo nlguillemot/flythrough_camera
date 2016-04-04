@@ -70,6 +70,7 @@ extern "C" {
 #endif // __cplusplus
 
 #include <math.h>
+#include <assert.h>
 
 void flythrough_camera_update(
     float eye[3],
@@ -87,6 +88,9 @@ void flythrough_camera_update(
 {
     float look_len = sqrtf(look[0] * look[0] + look[1] * look[1] + look[2] * look[2]);
     float up_len = sqrtf(up[0] * up[0] + up[1] * up[1] + up[2] * up[2]);
+
+    assert(fabsf(look_len - 1.0f) < 0.000001f);
+    assert(fabsf(up_len - 1.0f) < 0.000001f);
 
     // account for Y going down in cursor apis
     delta_cursor_y = -delta_cursor_y;
