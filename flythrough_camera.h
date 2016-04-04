@@ -259,6 +259,9 @@ void flythrough_camera_look_to(
     float look_len = sqrtf(look[0] * look[0] + look[1] * look[1] + look[2] * look[2]);
     float up_len = sqrtf(up[0] * up[0] + up[1] * up[1] + up[2] * up[2]);
 
+    assert(fabsf(look_len - 1.0f) < 0.000001f);
+    assert(fabsf(up_len - 1.0f) < 0.000001f);
+
     // up'' = normalize(up)
     float up_norm[3] = { up[0] / up_len, up[1] / up_len, up[2] / up_len };
 
