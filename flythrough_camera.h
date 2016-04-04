@@ -11,7 +11,7 @@ extern "C" {
 // * eye:
 //     * Current eye position. Will be updated to new eye position.
 // * look:
-//     * Current look direction. Will be updated to new eye direction.
+//     * Current look direction. Will be updated to new look direction.
 // * up:
 //     * Camera's "up" direction. Likely (0,1,0). Likely constant throughout application.
 // * view:
