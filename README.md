@@ -116,6 +116,9 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+    printf("flythrough_camera test:\n");
+    printf("hold right click, then move the mouse and press WASD/space/left ctrl\n");
+    
     WNDCLASSEX wc;
     ZeroMemory(&wc, sizeof(wc));
     wc.cbSize = sizeof(wc);
