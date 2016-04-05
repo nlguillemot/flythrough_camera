@@ -1,6 +1,6 @@
 # flythrough_camera
 
-![demonstration](https://j.gifs.com/mZNvBG.gif)
+![demonstration](https://j.gifs.com/v2LNZV.gif)
 
 Single-header single-function C/C++ immediate-mode camera for your graphics demos
 
