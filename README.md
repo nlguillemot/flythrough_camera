@@ -85,6 +85,8 @@ int main()
 
 # OpenGL Example
 
+![openglexample](https://j.gifs.com/gJMA3D.gif)
+
 Below is a fully-functional example program that works using OpenGL.
 
 Create a new Visual Studio project, drop this file in it, and it should just work.
