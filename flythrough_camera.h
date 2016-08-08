@@ -44,7 +44,7 @@ void flythrough_camera_update(
     float eye_speed,
     float degrees_per_cursor_move,
     float max_pitch_rotation_degrees,
-    double delta_cursor_x, double delta_cursor_y,
+    int delta_cursor_x, int delta_cursor_y,
     int forward_held, int left_held, int backward_held, int right_held,
     int jump_held, int crouch_held,
     unsigned int flags);
@@ -81,7 +81,7 @@ void flythrough_camera_update(
     float eye_speed,
     float degrees_per_cursor_move,
     float max_pitch_rotation_degrees,
-    double delta_cursor_x, double delta_cursor_y,
+    int delta_cursor_x, int delta_cursor_y,
     int forward_held, int left_held, int backward_held, int right_held,
     int jump_held, int crouch_held,
     unsigned int flags)
@@ -155,10 +155,10 @@ void flythrough_camera_update(
     }
 
     // apply yaw rotation (rotating left or right)
-    if (delta_cursor_x != 0.0)
+    if (delta_cursor_x != 0)
     {
         // rotation here is counter-clockwise because sin/cos are counter-clockwise
-        float yaw_degrees = (float)(-delta_cursor_x * degrees_per_cursor_move);
+        float yaw_degrees = -delta_cursor_x * degrees_per_cursor_move;
 
         float yaw_radians = yaw_degrees * 3.14159265359f / 180.0f;
         float yaw_cos = cosf(yaw_radians);
@@ -194,7 +194,7 @@ void flythrough_camera_update(
     }
 
     // apply pitch rotation (rotating up or down)
-    if (delta_cursor_y != 0.0)
+    if (delta_cursor_y != 0)
     {
         float rads_to_up = acosf(look[0] * up[0] + look[1] * up[1] + look[2] * up[2]);
         float rads_to_down = acosf(look[0] * -up[0] + look[1] * -up[1] + look[2] * -up[2]);
@@ -211,7 +211,7 @@ void flythrough_camera_update(
             min_pitch_degrees = 0.0f;
 
         // rotation here is counter-clockwise because sin/cos are counter-clockwise
-        float pitch_degrees = (float)(delta_cursor_y * degrees_per_cursor_move);
+        float pitch_degrees = delta_cursor_y * degrees_per_cursor_move;
 
         if (pitch_degrees > 0.0f && pitch_degrees > max_pitch_degrees)
             pitch_degrees = max_pitch_degrees;
