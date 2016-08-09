@@ -14,7 +14,7 @@ extern "C" {
 //     * Current look direction. Will be updated to new look direction.
 // * up:
 //     * Camera's "up" direction. Likely (0,1,0). Likely constant throughout application.
-// * view:
+// * view (optional):
 //     * The matrix that will be updated with the new view transform. Previous contents don't matter.
 // * delta_time_seconds:
 //     * Amount of seconds passed since last update.
@@ -260,6 +260,9 @@ void flythrough_camera_look_to(
     float view[16],
     unsigned int flags)
 {
+    if (!view)
+        return;
+        
     float look_len = sqrtf(look[0] * look[0] + look[1] * look[1] + look[2] * look[2]);
     float up_len = sqrtf(up[0] * up[0] + up[1] * up[1] + up[2] * up[2]);
 
